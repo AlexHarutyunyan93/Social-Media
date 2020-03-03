@@ -3,8 +3,6 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -14,8 +12,21 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import HomeIcon from '@material-ui/icons/Home';
+import SportsMotorsportsIcon from '@material-ui/icons/SportsMotorsports';
+import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
+import EmojiFlagsIcon from '@material-ui/icons/EmojiFlags';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+        width: '100%',
+
+    },
     grow: {
         flexGrow: 1,
     },
@@ -77,8 +88,16 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+function a11yProps(index) {
+    return {
+        id: `scrollable-force-tab-${index}`,
+        'aria-controls': `scrollable-force-tabpanel-${index}`,
+    };
+}
+
 export function HeaderComponent({logout}) {
     const classes = useStyles();
+    const [value, setValue] = React.useState(0);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -100,6 +119,10 @@ export function HeaderComponent({logout}) {
 
     const handleMobileMenuOpen = event => {
         setMobileMoreAnchorEl(event.currentTarget);
+    };
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
     };
 
     const menuId = 'primary-search-account-menu';
@@ -162,66 +185,72 @@ export function HeaderComponent({logout}) {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static">
+            <AppBar position="static" color={""}>
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="open drawer"
+                        <Typography className={classes.title} variant="h6" noWrap>
+                            Social Media
+                        </Typography>
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        variant="scrollable"
+                        scrollButtons="on"
+                        indicatorColor="primary"
+                        textColor="primary"
+                        aria-label="scrollable force tabs example"
                     >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        Material-UI
-                    </Typography>
-                    {/*<div className={classes.search}>*/}
+                        <Tab label="Home"       icon={<HomeIcon />} {...a11yProps(0)} />
+                        <Tab label="Blog" icon={<SportsMotorsportsIcon />} {...a11yProps(2)} />
+                        <Tab label="Bikes"  icon={<DirectionsBikeIcon />} {...a11yProps(3)} />
+                        <Tab label="Excursions"  icon={<EmojiFlagsIcon />} {...a11yProps(4)} />
+                    </Tabs>
+                        {/*<div className={classes.search}>*/}
                         {/*<div className={classes.searchIcon}>*/}
-                            {/*<SearchIcon />*/}
+                        {/*<SearchIcon />*/}
                         {/*</div>*/}
                         {/*<InputBase*/}
-                            {/*placeholder="Search…"*/}
-                            {/*classes={{*/}
-                                {/*root: classes.inputRoot,*/}
-                                {/*input: classes.inputInput,*/}
-                            {/*}}*/}
-                            {/*inputProps={{ 'aria-label': 'search' }}*/}
+                        {/*placeholder="Search…"*/}
+                        {/*classes={{*/}
+                        {/*root: classes.inputRoot,*/}
+                        {/*input: classes.inputInput,*/}
+                        {/*}}*/}
+                        {/*inputProps={{ 'aria-label': 'search' }}*/}
                         {/*/>*/}
-                    {/*</div>*/}
-                    <div className={classes.grow} />
-                    <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </div>
-                    <div className={classes.sectionMobile}>
-                        <IconButton
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
-                    </div>
+                        {/*</div>*/}
+                        <div className={classes.grow} />
+                        <div className={classes.sectionDesktop}>
+                            <IconButton aria-label="show 4 new mails" color="inherit">
+                                <Badge badgeContent={4} color="secondary">
+                                    <MailIcon />
+                                </Badge>
+                            </IconButton>
+                            <IconButton aria-label="show 17 new notifications" color="inherit">
+                                <Badge badgeContent={17} color="secondary">
+                                    <NotificationsIcon />
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        </div>
+                        <div className={classes.sectionMobile}>
+                            <IconButton
+                                aria-label="show more"
+                                aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                onClick={handleMobileMenuOpen}
+                                color="inherit"
+                            >
+                                <MoreIcon />
+                            </IconButton>
+                        </div>
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}

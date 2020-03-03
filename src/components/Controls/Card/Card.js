@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export function RecipeReviewCard() {
+function RecipeReviewCard() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -84,3 +84,5 @@ export function RecipeReviewCard() {
         </Card>
     );
 }
+
+export {RecipeReviewCard as Card}
